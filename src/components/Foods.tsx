@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import CardFood from "./card/CardFood";
 
@@ -13,7 +13,7 @@ type DataType = {
   sale: number;
 };
 
-const Food = () => {
+const Foods = () => {
   const [dummy, setDummy] = useState<DataType[] | null>(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -29,21 +29,24 @@ const Food = () => {
   }, []);
 
   return (
-    <Stack width={"894px"}>
-      <Stack
-        width={"100%"}
-        direction={"row"}
-        justifyContent={"space-between"}
-      ></Stack>
-      {dummy?.map((a, id) => {
-        return (
-          <Stack key={id}>
-            <CardFood data={a} />
-          </Stack>
-        );
-      })}
+    <Stack>
+      <Stack width={"100%"} justifyContent={"space-between"}>
+        <Stack direction={"row"} justifyContent={"space-between"}>
+          <Typography>category</Typography>
+          <Button>add new food</Button>
+        </Stack>
+      </Stack>
+      <Stack width={"894px"} direction={"row"} flexWrap={"wrap"} gap={"24px"}>
+        {dummy?.map((a, id) => {
+          return (
+            <Stack key={id}>
+              <CardFood data={a} />
+            </Stack>
+          );
+        })}
+      </Stack>
     </Stack>
   );
 };
 
-export default Food;
+export default Foods;

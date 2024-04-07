@@ -49,5 +49,3 @@ const CardFood = ({ data }: { data: dataType }) => {
 };
 
 export default CardFood;
-
-10000 - (10000 / 100) * 25;

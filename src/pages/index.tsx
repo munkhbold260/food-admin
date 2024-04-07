@@ -1,5 +1,5 @@
-import FoodMenu from "@/components/foodMenu/FoodMenu";
-import Food from "@/components/Foods";
+import FoodMenu from "@/components/FoodMenu";
+import Foods from "@/components/Foods";
 import { Stack } from "@mui/material";
 import Head from "next/head";
 
@@ -12,9 +12,9 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Stack direction={"row"}>
+      <Stack direction={"row"} maxWidth={"1200px"} margin={"auto"}>
         <FoodMenu />
-        <Food />
+        <Foods />
       </Stack>
     </>
   );
