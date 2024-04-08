@@ -56,7 +56,7 @@ const CategoryAddModal = ({
     if (fetched_json.message == "Successfully user created") {
       console.log("category added");
     } else {
-      alert("alrady email");
+      alert("already email");
     }
   };
 
@@ -85,13 +85,13 @@ const CategoryAddModal = ({
           onChange={(e: any) => {
             setNewCat(e.target.value);
           }}
-          type="number"
           placeholder="category name"
           fullWidth
+          type="text"
         />
         <Stack direction={"row"} justifyContent={"end"}>
           <Button> Clear</Button>
-          <Button onClick={() => handleCreateCategory}>Continue</Button>
+          <Button onClick={handleCreateCategory}>Continue</Button>
         </Stack>
       </Box>
     </Modal>

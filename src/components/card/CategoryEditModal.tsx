@@ -16,6 +16,7 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
+
 const CategoryEditMOdal = ({
   opener,
   handleClose,
@@ -25,6 +26,59 @@ const CategoryEditMOdal = ({
   handleClose: React.Dispatch<React.SetStateAction<boolean>>;
   data: string;
 }) => {
+  const cat_url = "http://localhost:4000/api/category";
+
+  const [cat, setCat] = React.useState("");
+
+  const handleDelete = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const categoryData = {
+      name: cat,
+    };
+
+    const options = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(categoryData),
+    };
+
+    console.log("body====", JSON.stringify(categoryData));
+
+    const fetched_data = await fetch(cat_url, options);
+    const fetched_json = await fetched_data.json();
+
+    if (fetched_json.message == "Successfully user created") {
+      console.log("category added");
+    } else {
+      alert("already email");
+    }
+  };
+
+  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const categoryData = {
+      // name: data,
+      name: cat,
+    };
+
+    const options = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(categoryData),
+    };
+
+    const fetched_data = await fetch(cat_url, options);
+    const fetched_json = await fetched_data.json();
+
+    if (fetched_json.message == "Successfully user created") {
+      console.log("category added");
+    } else {
+      alert("already email");
+    }
+  };
+
   return (
     <div>
       <Modal
@@ -35,9 +89,14 @@ const CategoryEditMOdal = ({
       >
         <Box sx={style}>
           <Typography>{data}</Typography>
-          <TextField placeholder="Edit category name" />
-          <Button>Save</Button>
-          <Button>Delete Category</Button>
+          <TextField
+            onChange={(e) => {
+              setCat(e.target.value);
+            }}
+            placeholder="Edit category name"
+          />
+          <Button onClick={handleUpdate}>Save</Button>
+          <Button onClick={handleDelete}>Delete Category</Button>
         </Box>
       </Modal>
     </div>

@@ -28,8 +28,6 @@ const FoodMenu = ({ setCat }: { setCat: Dispatch<SetStateAction<string>> }) => {
     fetchData();
   }, []);
 
-  // console.log("dummy category", dummyCategories);
-
   return (
     <Stack width={"402px"} gap={"40px"}>
       <Stack> Food menu</Stack>
@@ -39,11 +37,7 @@ const FoodMenu = ({ setCat }: { setCat: Dispatch<SetStateAction<string>> }) => {
         })}
       </Stack>
       <Button onClick={handleOpen}>+ Create new category</Button>
-      <CategoryAddModal
-        handleClose={handleClose}
-        opener={open}
-        // setDummyCat={setDummyCategories}
-      />
+      <CategoryAddModal handleClose={handleClose} opener={open} />
     </Stack>
   );
 };
