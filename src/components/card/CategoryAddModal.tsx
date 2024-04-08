@@ -6,11 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
-
-// type dataType = {
-//   name: string;
-// };
+import { Dispatch, SetStateAction, useState } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -27,13 +23,42 @@ const style = {
 const CategoryAddModal = ({
   opener,
   handleClose,
-}: //   data,
+}: // setDummyCat,
 {
   opener: boolean;
   handleClose: Dispatch<SetStateAction<boolean>>;
-  //   data: dataType;
+  // setDummyCat: Dispatch<SetStateAction<string[]>>;
 }) => {
-  //   const handleClose = () => setOpen(false);
+  const cat_add_url = "http://localhost:4000/api/category";
+
+  const [newCat, setNewCat] = useState();
+
+  const handleCreateCategory = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    const userData = {
+      name: newCat,
+    };
+
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    };
+
+    console.log("body====", JSON.stringify(userData));
+
+    const fetched_data = await fetch(cat_add_url, options);
+    const fetched_json = await fetched_data.json();
+
+    if (fetched_json.message == "Successfully user created") {
+      console.log("category added");
+    } else {
+      alert("alrady email");
+    }
+  };
 
   return (
     <Modal
@@ -56,10 +81,17 @@ const CategoryAddModal = ({
             Category new category
           </Typography>
         </Stack>
-        <TextField placeholder="category name" fullWidth />
+        <TextField
+          onChange={(e: any) => {
+            setNewCat(e.target.value);
+          }}
+          type="number"
+          placeholder="category name"
+          fullWidth
+        />
         <Stack direction={"row"} justifyContent={"end"}>
           <Button> Clear</Button>
-          <Button>Continue</Button>
+          <Button onClick={() => handleCreateCategory}>Continue</Button>
         </Stack>
       </Box>
     </Modal>

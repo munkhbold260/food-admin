@@ -1,41 +1,49 @@
 import { Button, Stack } from "@mui/material";
-import FoodCategory from "./card/CardFoodCategory";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import CategoryAddModal from "./card/CategoryAddModal";
+import CardFoodCategory from "./card/CardFoodCategory";
 
-type CategoryType = [string];
+type CategoryType = { _id: string; name: string; __v: string };
 
-const FoodMenu = () => {
+const FoodMenu = ({ setCat }: { setCat: Dispatch<SetStateAction<string>> }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const [dummyCategories, setDummyCategories] = useState<CategoryType | null>(
-    null
-  );
+  const [dummyCategories, setDummyCategories] = useState<CategoryType[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("./dummyCategory.json");
+        const response = await fetch("http://localhost:4000/api/category", {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
         const categories = await response.json();
-        setDummyCategories(categories);
+        setDummyCategories(categories.categories);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
+
+  // console.log("dummy category", dummyCategories);
+
   return (
     <Stack width={"402px"} gap={"40px"}>
       <Stack> Food menu</Stack>
       <Stack gap={"26px"}>
         {dummyCategories?.map((a, id) => {
-          return <FoodCategory key={id} data={a} />;
+          return <CardFoodCategory key={id} data={a.name} setCat={setCat} />;
         })}
       </Stack>
       <Button onClick={handleOpen}>+ Create new category</Button>
-      <CategoryAddModal handleClose={handleClose} opener={open} />
+      <CategoryAddModal
+        handleClose={handleClose}
+        opener={open}
+        // setDummyCat={setDummyCategories}
+      />
     </Stack>
   );
 };

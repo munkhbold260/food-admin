@@ -13,7 +13,7 @@ type DataType = {
   sale: number;
 };
 
-const Foods = () => {
+const Foods = ({ cat }: { cat: string }) => {
   const [dummy, setDummy] = useState<DataType[] | null>(null);
   useEffect(() => {
     const fetchData = async () => {
@@ -32,18 +32,20 @@ const Foods = () => {
     <Stack>
       <Stack width={"100%"} justifyContent={"space-between"}>
         <Stack direction={"row"} justifyContent={"space-between"}>
-          <Typography>category</Typography>
+          <Typography>{cat}</Typography>
           <Button>add new food</Button>
         </Stack>
       </Stack>
       <Stack width={"894px"} direction={"row"} flexWrap={"wrap"} gap={"24px"}>
-        {dummy?.map((a, id) => {
-          return (
-            <Stack key={id}>
-              <CardFood data={a} />
-            </Stack>
-          );
-        })}
+        {dummy
+          ?.filter((b) => b.category == cat)
+          .map((a, id) => {
+            return (
+              <Stack key={id}>
+                <CardFood data={a} />
+              </Stack>
+            );
+          })}
       </Stack>
     </Stack>
   );

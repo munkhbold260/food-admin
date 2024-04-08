@@ -2,8 +2,30 @@ import FoodMenu from "@/components/FoodMenu";
 import Foods from "@/components/Foods";
 import { Stack } from "@mui/material";
 import Head from "next/head";
+import { useState } from "react";
+
+// type CategoryType = string[];
 
 const Home = () => {
+  // const [dummyCategories, setDummyCategories] = useState<CategoryType | null>(
+  //   null
+  // );
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch("/localhost:4000/api/category/");
+  //       const categories = await response.json();
+  //       setDummyCategories(categories);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  const [category, setCategory] = useState("Main Dish");
+
   return (
     <>
       <Head>
@@ -13,8 +35,8 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Stack direction={"row"} maxWidth={"1200px"} margin={"auto"}>
-        <FoodMenu />
-        <Foods />
+        <FoodMenu setCat={setCategory} />
+        <Foods cat={category} />
       </Stack>
     </>
   );
