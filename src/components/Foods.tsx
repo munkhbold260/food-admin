@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import CardFood from "./card/CardFood";
-import { ContextType, UseNumber } from "@/context/NumChangeContext";
+import FoodAddModal from "./card/FoodAddModal";
 
 type DataType = {
   id: number;
@@ -16,7 +16,10 @@ type DataType = {
 
 const Foods = ({ cat }: { cat: string }) => {
   const [dummy, setDummy] = useState<DataType[] | null>(null);
-  const { count, setCount } = UseNumber();
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,15 +39,9 @@ const Foods = ({ cat }: { cat: string }) => {
       <Stack width={"100%"} justifyContent={"space-between"}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography>{cat}</Typography>
-          <Button>add new food</Button>
+          <Button onClick={handleOpen}>add new food</Button>
+          <FoodAddModal handleClose={handleClose} opener={open} />
         </Stack>
-        <Button
-          onClick={() => {
-            setCount(count + 1);
-          }}
-        >
-          +
-        </Button>
       </Stack>
       <Stack width={"894px"} direction={"row"} flexWrap={"wrap"} gap={"24px"}>
         {dummy

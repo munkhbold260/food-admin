@@ -1,15 +1,15 @@
 import Layout from "@/components/Layout";
-import NumberProvider from "@/context/NumChangeContext";
+import CategoryProvider from "@/context/CategoryContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <NumberProvider>
+    <CategoryProvider>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </NumberProvider>
+    </CategoryProvider>
   );
 };
 

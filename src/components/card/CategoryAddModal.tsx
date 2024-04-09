@@ -1,3 +1,4 @@
+// import { UseCategory } from "@/context/CategoryContext";
 import {
   Box,
   Button,
@@ -27,6 +28,7 @@ const CategoryAddModal = ({
   opener: boolean;
   handleClose: Dispatch<SetStateAction<boolean>>;
 }) => {
+  // const { dbCategories, setDbCategories } = UseCategory;
   const cat_add_url = "http://localhost:4000/api/category";
 
   const [newCat, setNewCat] = useState();
@@ -48,11 +50,15 @@ const CategoryAddModal = ({
 
     const fetched_data = await fetch(cat_add_url, options);
     const fetched_json = await fetched_data.json();
+    () => {
+      // setDbCategories([...dbCategories, fetched_json]);
+    };
     console.log(fetched_json);
     if (fetched_json.message == "Successfully user created") {
     }
+
     handleClose(false);
-    location.reload();
+    // location.reload();
     // else {
     // alert("already email");
     // }

@@ -18,7 +18,6 @@ const CardFood = ({ data }: { data: dataType }) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // console.log("daaataaa", data);
   return (
     <Stack width={"256px"} height={"282px"}>
       <CardActionArea onClick={handleOpen}>

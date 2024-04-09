@@ -1,19 +1,26 @@
-import { useContext, createContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
+export type CategoryType = {
+  dbCategories: { name: string; _id: string; __v: string };
+  setDbCategories: React.Dispatch<React.SetStateAction<CategoryType[]>>;
+};
 
+const CategoryContext = createContext<CategoryType | null>(null);
 
+export const UseCategory = () => {
+  return useContext(CategoryContext);
+};
 
+const CategoryProvider = ({ children }: { children: ReactNode }) => {
+  const [dbCategories, setDbCategories] = useState<CategoryType[]>([]);
 
-
-type CategoryType = { _id: string; name: string; __v: string };
-
-
-  
-const CategoryProvider = ({ children }) => {
-    const CategoryContext = createContext();
-    const [dummyCategories, setDummyCategories] = useState<CategoryType[]>([]);
-  
-useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("http://localhost:4000/api/category", {
@@ -21,18 +28,17 @@ useEffect(() => {
           headers: { "Content-Type": "application/json" },
         });
         const categories = await response.json();
-        setDummyCategories(categories.categories);
+        setDbCategories(categories.categories);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
   }, []);
-    }
-  const fetchedCategories = [];
-  const [categories, setCategories] = useState(fetchedCategories);
+  console.log("food menu dummy context ===== ", dbCategories);
+
   return (
-    <CategoryContext.Provider value={{ categories, setCategories }}>
+    <CategoryContext.Provider value={{ dbCategories, setDbCategories }}>
       {children}
     </CategoryContext.Provider>
   );
