@@ -1,6 +1,7 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import CardFood from "./card/CardFood";
+import { ContextType, UseNumber } from "@/context/NumChangeContext";
 
 type DataType = {
   id: number;
@@ -15,6 +16,8 @@ type DataType = {
 
 const Foods = ({ cat }: { cat: string }) => {
   const [dummy, setDummy] = useState<DataType[] | null>(null);
+  const { count, setCount } = UseNumber();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,6 +38,13 @@ const Foods = ({ cat }: { cat: string }) => {
           <Typography>{cat}</Typography>
           <Button>add new food</Button>
         </Stack>
+        <Button
+          onClick={() => {
+            setCount(count + 1);
+          }}
+        >
+          +
+        </Button>
       </Stack>
       <Stack width={"894px"} direction={"row"} flexWrap={"wrap"} gap={"24px"}>
         {dummy

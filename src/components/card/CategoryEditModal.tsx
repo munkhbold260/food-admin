@@ -30,7 +30,7 @@ const CategoryEditMOdal = ({
 
   const [cat, setCat] = React.useState("");
 
-  const handleDelete = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleDelete = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     const categoryData = {
@@ -50,16 +50,17 @@ const CategoryEditMOdal = ({
 
     if (fetched_json.message == "Successfully user created") {
       console.log("category added");
-    } else {
+
       alert("already email");
     }
+    location.reload();
+    handleClose(false);
   };
 
-  const handleUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdate = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     const categoryData = {
-      // name: data,
       name: cat,
     };
 
@@ -95,8 +96,20 @@ const CategoryEditMOdal = ({
             }}
             placeholder="Edit category name"
           />
-          <Button onClick={handleUpdate}>Save</Button>
-          <Button onClick={handleDelete}>Delete Category</Button>
+          <Button
+            onClick={(event: React.MouseEvent<HTMLElement>) =>
+              handleUpdate(event)
+            }
+          >
+            Save
+          </Button>
+          <Button
+            onClick={(event: React.MouseEvent<HTMLElement>) =>
+              handleDelete(event)
+            }
+          >
+            Delete Category
+          </Button>
         </Box>
       </Modal>
     </div>

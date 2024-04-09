@@ -23,19 +23,15 @@ const style = {
 const CategoryAddModal = ({
   opener,
   handleClose,
-}: // setDummyCat,
-{
+}: {
   opener: boolean;
   handleClose: Dispatch<SetStateAction<boolean>>;
-  // setDummyCat: Dispatch<SetStateAction<string[]>>;
 }) => {
   const cat_add_url = "http://localhost:4000/api/category";
 
   const [newCat, setNewCat] = useState();
 
-  const handleCreateCategory = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleCreateCategory = async (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     const userData = {
@@ -52,12 +48,14 @@ const CategoryAddModal = ({
 
     const fetched_data = await fetch(cat_add_url, options);
     const fetched_json = await fetched_data.json();
-
+    console.log(fetched_json);
     if (fetched_json.message == "Successfully user created") {
-      console.log("category added");
-    } else {
-      alert("already email");
     }
+    handleClose(false);
+    location.reload();
+    // else {
+    // alert("already email");
+    // }
   };
 
   return (
@@ -90,8 +88,13 @@ const CategoryAddModal = ({
           type="text"
         />
         <Stack direction={"row"} justifyContent={"end"}>
-          <Button> Clear</Button>
-          <Button onClick={handleCreateCategory}>Continue</Button>
+          <Button
+            onClick={(event: React.MouseEvent<HTMLElement>) =>
+              handleCreateCategory(event)
+            }
+          >
+            Add Category
+          </Button>
         </Stack>
       </Box>
     </Modal>
