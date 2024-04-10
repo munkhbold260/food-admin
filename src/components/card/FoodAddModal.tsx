@@ -22,8 +22,16 @@ const FoodAddModal = ({
   opener: boolean;
   handleClose: Dispatch<SetStateAction<boolean>>;
 }) => {
-  type DataType = string;
-  const [data, setData] = useState<DataType>("mongol");
+  type FoodType = {
+    category: string;
+    foodname: string;
+    price: number;
+    imagePath: string;
+    ingredients: string[];
+    stock: number;
+    sale: number;
+  };
+  const [data, setData] = useState<FoodType[]>([]);
   async function handleContinue() {
     console.log(data);
     // const signup_url = "http://localhost:4000/api/food";
