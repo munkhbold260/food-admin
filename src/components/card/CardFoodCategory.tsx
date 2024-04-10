@@ -2,14 +2,13 @@ import { Button, Stack } from "@mui/material";
 import ThreeDot from "../icons/ThreeDot";
 import CategoryEditMOdal from "./CategoryEditModal";
 import React, { Dispatch, SetStateAction } from "react";
-
-type DataType = string;
+import { CategoryType } from "@/context/CategoryContext";
 
 const CardFoodCategory = ({
   data,
   setCat,
 }: {
-  data: DataType;
+  data: CategoryType;
   setCat: Dispatch<SetStateAction<string>>;
 }) => {
   const [open, setOpen] = React.useState(false);
@@ -26,11 +25,11 @@ const CardFoodCategory = ({
     >
       <Button
         onClick={() => {
-          setCat(data);
+          setCat(data.name);
         }}
         fullWidth
       >
-        {data}
+        {data.name}
       </Button>
       <Button onClick={handleOpen}>
         <ThreeDot />

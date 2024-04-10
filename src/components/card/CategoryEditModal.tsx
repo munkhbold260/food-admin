@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { TextField } from "@mui/material";
+import { CategoryType } from "@/context/CategoryContext";
 
 const style = {
   position: "absolute" as "absolute",
@@ -24,7 +25,7 @@ const CategoryEditMOdal = ({
 }: {
   opener: boolean;
   handleClose: React.Dispatch<React.SetStateAction<boolean>>;
-  data: string;
+  data: CategoryType;
 }) => {
   const cat_url = "http://localhost:4000/api/category";
 
@@ -43,15 +44,11 @@ const CategoryEditMOdal = ({
       body: JSON.stringify(categoryData),
     };
 
-    console.log("body====", JSON.stringify(categoryData));
-
     const fetched_data = await fetch(cat_url, options);
     const fetched_json = await fetched_data.json();
 
     if (fetched_json.message == "Successfully user created") {
-      console.log("category added");
-
-      alert("already email");
+      console.log("category edited");
     }
     location.reload();
     handleClose(false);
@@ -62,8 +59,9 @@ const CategoryEditMOdal = ({
 
     const categoryData = {
       name: cat,
+      _id: data._id,
     };
-
+    // console.log(categoryData);
     const options = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -78,6 +76,8 @@ const CategoryEditMOdal = ({
     } else {
       alert("already email");
     }
+    location.reload();
+    handleClose(false);
   };
 
   return (
@@ -89,7 +89,7 @@ const CategoryEditMOdal = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography>{data}</Typography>
+          <Typography>{data.name}</Typography>
           <TextField
             onChange={(e) => {
               setCat(e.target.value);

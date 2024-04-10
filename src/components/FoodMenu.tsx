@@ -14,7 +14,7 @@ const FoodMenu = ({ setCat }: { setCat: Dispatch<SetStateAction<string>> }) => {
       <Stack> Food menu</Stack>
       <Stack gap={"26px"}>
         {dbCategories?.map((a, id) => {
-          return <CardFoodCategory key={id} data={a.name} setCat={setCat} />;
+          return <CardFoodCategory key={id} data={a} setCat={setCat} />;
         })}
       </Stack>
       <Button onClick={handleOpen}>+ Create new category</Button>
